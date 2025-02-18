@@ -7,6 +7,15 @@ A custom spinner-style calendar built using Jetpack Compose and integrated into 
 ✔️ Smooth & interactive UI
 ✔️ Easy integration in Android projects
 
+📌 Demo
+🎥 Spinner Calendar LightTheme UI
+   Video Url : https://github.com/user-attachments/assets/f34250f1-cc9f-47f9-a1d1-58aabf18553b
+
+📌 Demo
+🎥 Spinner Calendar DarkTheme UI
+    Video Url : https://github.com/user-attachments/assets/9c3ab6af-537a-46fe-a52f-f1e0bc55e20d
+
+
 🚀 Setup & Installation
 1️⃣ Clone the Repository
 sh
