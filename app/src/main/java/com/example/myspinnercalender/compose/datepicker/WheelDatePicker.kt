@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
@@ -46,7 +48,7 @@ import java.util.Date
 @Composable
 fun WheelDatePicker(
     offset: Int = 4,
-    yearsRange: IntRange = IntRange(1923, 2121),
+    yearsRange: IntRange = IntRange(1990, 2021),
     startDate: Date = Date(DateUtils.getCurrentTime()),
     textSize: Int = 16,
     selectorEffectEnabled: Boolean = true,
@@ -84,7 +86,6 @@ fun WheelDatePicker(
 
         val height = (fontSize + 11).dp
 
-
         Row(
             modifier = Modifier
                 .fillMaxSize()
@@ -93,6 +94,30 @@ fun WheelDatePicker(
 
 
             key(days.size) {
+
+                //MONTH VIEW
+                InfiniteWheelView(
+                    modifier = Modifier.weight(2f),
+                    itemSize = DpSize(150.dp, height),
+                    selection = maxOf(months.indexOf(selectedDate.month), 0),
+                    itemCount = months.size,
+                    rowOffset = offset,
+                    selectorOption = SelectorOptions().copy(selectEffectEnabled = selectorEffectEnabled, enabled = false),
+                    onFocusItem = {
+                        selectedDate = selectedDate.withMonth(months[it])
+                    },
+                    content = {
+                        Text(
+                            text = DateFormatSymbols().months[months[it]],
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .width(120.dp),
+                            fontSize = fontSize.sp,
+                            color = if (darkModeEnabled) PickerTheme.colors.textPrimary else colorLightTextPrimary
+                        )
+                    })
+
+                // DATE VIEW
                 InfiniteWheelView(modifier = Modifier.weight(1f),
                     itemSize = DpSize(150.dp, height),
                     selection = maxOf(days.indexOf(selectedDate.day), 0),
@@ -105,34 +130,19 @@ fun WheelDatePicker(
                     content = {
                         Text(
                             text = days[it].toString(),
-                            textAlign = TextAlign.End,
-                            modifier = Modifier.width(50.dp),
+                            textAlign = TextAlign.Start,
+                            modifier = Modifier
+                                .width(50.dp),
                             fontSize = fontSize.sp,
                             color = if (darkModeEnabled) PickerTheme.colors.textPrimary else colorLightTextPrimary
                         )
                     })
             }
 
-            InfiniteWheelView(modifier = Modifier.weight(2f),
-                itemSize = DpSize(150.dp, height),
-                selection = maxOf(months.indexOf(selectedDate.month), 0),
-                itemCount = months.size,
-                rowOffset = offset,
-                selectorOption = SelectorOptions().copy(selectEffectEnabled = selectorEffectEnabled, enabled = false),
-                onFocusItem = {
-                    selectedDate = selectedDate.withMonth(months[it])
-                },
-                content = {
-                    Text(
-                        text = DateFormatSymbols().months[months[it]],
-                        textAlign = TextAlign.Start,
-                        modifier = Modifier.width(120.dp),
-                        fontSize = fontSize.sp,
-                        color = if (darkModeEnabled) PickerTheme.colors.textPrimary else colorLightTextPrimary
-                    )
-                })
 
 
+
+            //YEAR VIEW
             InfiniteWheelView(modifier = Modifier.weight(1f),
                 itemSize = DpSize(150.dp, height),
                 selection = years.indexOf(selectedDate.year),
@@ -147,7 +157,8 @@ fun WheelDatePicker(
                     Text(
                         text = years[it].toString(),
                         textAlign = TextAlign.Start,
-                        modifier = Modifier.width(100.dp),
+                        modifier = Modifier
+                            .width(100.dp),
                         fontSize = fontSize.sp,
                         color = if (darkModeEnabled) PickerTheme.colors.textPrimary else colorLightTextPrimary
                     )
@@ -163,6 +174,13 @@ fun WheelDatePicker(
                     )
                 ),
         ) {}
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .background(Color.LightGray.copy(alpha = 0.3f), shape = RoundedCornerShape(12.dp))
+        )
 
         SelectorView(darkModeEnabled= darkModeEnabled, offset = offset)
 

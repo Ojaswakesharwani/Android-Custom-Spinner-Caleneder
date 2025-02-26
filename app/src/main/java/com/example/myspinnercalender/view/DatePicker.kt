@@ -141,7 +141,7 @@ class DatePicker: LinearLayout {
     }
 
     companion object {
-        const val MONTH_ON_FIRST = 0
+        const val MONTH_ON_FIRST = 1
         const val DAY_ON_FIRST = 1
         private const val MAX_TEXT_SIZE = 20
         private const val MAX_OFFSET = 3

@@ -34,7 +34,9 @@ fun SelectionView(
                 .fillMaxWidth(),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Box(
+
+            //Removed Line to disable line
+           Box(
                 modifier = Modifier
                     .height(selectorOptions.width)
                     .alpha(selectorOptions.alpha)
